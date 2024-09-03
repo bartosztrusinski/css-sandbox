@@ -1,0 +1,179 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+---
+
+<MainLayout title="Full-screen Menu">
+  <button class="open">Open menu</button>
+  <dialog>
+    <main>
+      <button autofocus class="close">close</button>
+      <ul>
+        <li data-text="Home"><a href="#">Home</a></li>
+        <li data-text="Blog"><a href="#">Blog</a></li>
+        <li data-text="Courses"><a href="#">Courses</a></li>
+        <li data-text="Goodies"><a href="#">Goodies</a></li>
+        <li data-text="About"><a href="#">About</a></li>
+      </ul>
+    </main>
+  </dialog>
+</MainLayout>
+
+<script>
+  const dialog = document.querySelector("dialog") as HTMLDialogElement;
+  const openButton = document.querySelector(".open") as HTMLButtonElement;
+  const closeButton = document.querySelector(".close") as HTMLButtonElement;
+
+  openButton.addEventListener("click", () => {
+    dialog.showModal();
+  });
+
+  closeButton.addEventListener("click", () => {
+    dialog.close();
+  });
+</script>
+
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding-top: 2rem;
+  }
+
+  .open {
+    border-radius: 0.6rem;
+    padding: 1rem 3rem;
+    font-weight: 700;
+    font-size: 2rem;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    border: 0.125rem solid hsl(0 10% 10%);
+    transition: all 160ms ease-in-out;
+
+    &:hover,
+    &:focus-visible {
+      transform: scale(1.08);
+    }
+  }
+
+  .close {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.6rem;
+    background-color: transparent;
+    color: hsl(3 100% 60%);
+    font-size: clamp(1.6rem, 1rem + 2vw, 2.8rem);
+    font-weight: 900;
+    line-height: 1;
+    padding: 0.5rem 1rem;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: all 160ms ease-in-out;
+    border-radius: 1rem;
+
+    &:hover,
+    &:focus-visible {
+      background-color: hsl(0 100% 86%);
+    }
+  }
+
+  dialog {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    border: none;
+  }
+
+  main {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    place-items: center;
+    background-color: hsl(30 67% 95%);
+    z-index: -2;
+  }
+
+  ul {
+    list-style-type: none;
+    font-size: clamp(2.1rem, 1.2rem + 3vw, 4rem);
+    font-weight: 700;
+    text-align: center;
+
+    &:hover li {
+      color: hsl(0 0% 0% / 0.2);
+    }
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    outline: none;
+    border: none;
+  }
+
+  li {
+    --background: var(--color-accent, hsl(355 100% 84%));
+    padding: 0.5rem 0.2rem;
+    cursor: pointer;
+    transition: all 220ms ease-in-out;
+
+    &:hover,
+    &:focus-within {
+      color: #000;
+      letter-spacing: 0.1rem;
+
+      &::before {
+        opacity: 1;
+        left: 50%;
+        letter-spacing: -0.4rem;
+        font-size: clamp(2.1em, 1em + 12vw, 3em);
+      }
+    }
+
+    &::before {
+      background-color: var(--background);
+      content: attr(data-text);
+      position: absolute;
+      top: 50%;
+      left: 60%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      place-content: center;
+      place-items: center;
+      text-align: center;
+      width: 200vw;
+      height: 100vh;
+      color: hsla(0, 0%, 0%, 0.1);
+      opacity: 0;
+      z-index: -1;
+      font-weight: 900;
+      font-size: 0.5em;
+      letter-spacing: 20vw;
+      transition: all 240ms ease-in-out;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    &:nth-child(1) {
+      --color-accent: hsl(162 98% 42%);
+    }
+
+    &:nth-child(2) {
+      --color-accent: hsl(46 90% 77%);
+    }
+
+    &:nth-child(3) {
+      --color-accent: hsl(212 95% 54%);
+    }
+
+    &:nth-child(4) {
+      --color-accent: hsl(248 77% 59%);
+    }
+  }
+</style>
