@@ -1,10 +1,13 @@
 ---
+import HomePageButton from "../components/HomePageButton.astro";
+
 type Props = {
   title?: string;
 };
 
-const projectTitle = "CSS Sandbox";
 const { title } = Astro.props;
+const projectTitle = "CSS Sandbox";
+const isHomePage = Astro.url.pathname === "/";
 ---
 
 <!doctype html>
@@ -18,8 +21,10 @@ const { title } = Astro.props;
   </head>
   <body>
     <slot />
+    {!isHomePage && <HomePageButton />}
   </body>
 </html>
+
 <style is:global>
   @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&display=swap");
 
