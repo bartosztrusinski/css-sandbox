@@ -40,11 +40,14 @@ const isHomePage = Astro.url.pathname === "/";
   }
 
   body {
+    --color-primary-hsl: 330, 86%, 49%;
+    --color-primary: hsl(var(--color-primary-hsl));
+
     margin: 0;
     padding: 1rem;
     box-sizing: border-box;
     font-family: "Nunito", sans-serif;
     color: #f4f4f4;
-    background-color: #101113;
+    background-color: hsl(222, 42%, 6%);
   }
 </style>
