@@ -1,5 +1,7 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+
+const routes = ["Home", "Blog", "Courses", "Goodies", "About"];
 ---
 
 <MainLayout title="Full-screen Menu">
@@ -8,11 +10,13 @@ import MainLayout from "../layouts/MainLayout.astro";
     <main>
       <button autofocus class="close">close</button>
       <ul>
-        <li data-text="Home"><a href="#">Home</a></li>
-        <li data-text="Blog"><a href="#">Blog</a></li>
-        <li data-text="Courses"><a href="#">Courses</a></li>
-        <li data-text="Goodies"><a href="#">Goodies</a></li>
-        <li data-text="About"><a href="#">About</a></li>
+        {
+          routes.map((route) => (
+            <li data-text={route}>
+              <a href="#">{route}</a>
+            </li>
+          ))
+        }
       </ul>
     </main>
   </dialog>
