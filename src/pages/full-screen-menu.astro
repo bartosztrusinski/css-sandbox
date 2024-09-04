@@ -118,14 +118,14 @@ import MainLayout from "../layouts/MainLayout.astro";
   }
 
   li {
-    --background: var(--color-accent, hsl(355 100% 84%));
+    --color-bg: var(--color-accent, hsl(355 100% 84%));
     padding: 0.5rem 0.2rem;
     cursor: pointer;
     transition: all 220ms ease-in-out;
 
     &:hover,
     &:focus-within {
-      color: #000;
+      color: hsl(0, 0%, 0%);
       letter-spacing: 0.1rem;
 
       &::before {
@@ -137,7 +137,7 @@ import MainLayout from "../layouts/MainLayout.astro";
     }
 
     &::before {
-      background-color: var(--background);
+      background-color: var(--color-bg);
       content: attr(data-text);
       position: absolute;
       top: 50%;
