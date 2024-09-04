@@ -1,0 +1,192 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+---
+
+<MainLayout title="Grid Height Transition">
+  <div class="container">
+    <h1>Going from 0 to auto, the easy way</h1>
+
+    <div class="accordion">
+      <div class="accordion__panel">
+        <h2 id="panel1-title">
+          <button
+            class="accordion__trigger"
+            aria-expanded="false"
+            aria-controls="panel1-content"
+          >
+            Grid is awesome
+          </button>
+        </h2>
+        <div
+          id="panel1-content"
+          class="accordion__content"
+          role="region"
+          aria-hidden="true"
+          aria-labelledby="panel1-title"
+        >
+          <div>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt
+              necessitatibus, odit provident, inventore similique ea ex quis
+              reiciendis repudiandae alias fugiat consequatur autem ipsa, animi
+              quibusdam voluptates voluptate beatae natus?
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion__panel">
+        <h2 id="panel2-title">
+          <button
+            class="accordion__trigger"
+            aria-expanded="true"
+            aria-controls="panel2-content"
+          >
+            It's full of neat tricks
+          </button>
+        </h2>
+        <div
+          id="panel2-content"
+          class="accordion__content"
+          role="region"
+          aria-hidden="false"
+          aria-labelledby="panel2-title"
+        >
+          <div>
+            <p>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet
+              vitae harum dolorem ab eligendi. Minima, at. Distinctio nesciunt
+              sapiente provident error vero ex. Totam non nobis ipsa, facilis
+              cumque autem?
+            </p>
+            <p>
+              Laudantium doloribus voluptatem deserunt tempore et quo dolores
+              iusto officia iure vero! Reiciendis animi, facilis dolore est id
+              suscipit quasi error maiores harum nulla, commodi vero, nobis
+              tenetur quaerat aliquid.
+            </p>
+            <p>
+              Vero iure obcaecati architecto ex quisquam consequatur, non earum
+              in temporibus sint ducimus. Voluptatibus exercitationem, magnam ad
+              assumenda et natus minima sit minus molestiae soluta iure
+              quibusdam nam, debitis a.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion__panel">
+        <h2 id="panel3-title">
+          <button
+            class="accordion__trigger"
+            aria-expanded="true"
+            aria-controls="panel3-content"
+          >
+            Tell me more
+          </button>
+        </h2>
+        <div
+          id="panel3-content"
+          class="accordion__content"
+          role="region"
+          aria-hidden="false"
+          aria-labelledby="panel3-title"
+        >
+          <div>
+            <p>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto,
+              amet!
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Other content here</h2>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit ea,
+      minus iste vero laborum voluptate quae nihil delectus deserunt dolor harum
+      molestiae magnam facilis eligendi quas adipisci dicta. Tempora,
+      voluptatibus?
+    </p>
+    <p>
+      Soluta in, ab facere unde molestiae incidunt blanditiis, tempore illo,
+      inventore iure laborum sunt. Hic quibusdam facere nesciunt corporis
+      consequatur illum ipsa quas, necessitatibus odio officia corrupti placeat
+      quae minima!
+    </p>
+    <p>
+      Aliquid ab labore corporis animi culpa ex omnis est quod itaque quo id
+      eius, dolores, asperiores delectus ut magnam exercitationem in explicabo
+      nulla, unde quae reprehenderit quia ducimus. Architecto, dolor.
+    </p>
+  </div>
+</MainLayout>
+
+<script>
+  const panels = document.querySelectorAll(".accordion__panel");
+
+  panels.forEach((panel) => {
+    panel.addEventListener("click", (event) => {
+      const target = event.currentTarget as HTMLElement;
+      const panelBtn = target.querySelector(
+        ".accordion__trigger",
+      ) as HTMLElement;
+      const panelContent = target.querySelector(
+        ".accordion__content",
+      ) as HTMLElement;
+      const isPanelOpen = panelBtn.getAttribute("aria-expanded") === "true";
+
+      panelBtn.setAttribute("aria-expanded", String(!isPanelOpen));
+      panelContent.setAttribute("aria-hidden", String(isPanelOpen));
+    });
+  });
+</script>
+
+<style>
+  h1,
+  h2 {
+    padding: 1rem 0;
+  }
+
+  p {
+    padding: 0.5rem 0;
+  }
+
+  .container {
+    padding: 2rem;
+    max-width: 42rem;
+    margin-inline: auto;
+  }
+
+  .accordion {
+    background: #222;
+    color: #fafafa;
+    padding: 1rem;
+  }
+
+  .accordion__panel {
+    border: 1px solid #fafafa;
+    padding: 1rem;
+  }
+
+  .accordion__trigger {
+    background: inherit;
+    color: inherit;
+    border: none;
+    font-size: 2rem;
+  }
+
+  .accordion__content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 300ms ease-in-out;
+    font-size: 1.2rem;
+  }
+
+  .accordion__content[aria-hidden="true"] {
+    grid-template-rows: 1fr;
+  }
+
+  .accordion__content > div {
+    overflow: hidden;
+  }
+</style>
