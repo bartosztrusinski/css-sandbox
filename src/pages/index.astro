@@ -1,14 +1,20 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+
+const urls = ["/full-screen-menu", "/grid-height-transition"];
 ---
 
 <MainLayout>
   <main>
     <h1>Space for CSS things ✨🖌️</h1>
     <ul>
-      <li>
-        <a href="/full-screen-menu">Full-screen Menu</a>
-      </li>
+      {
+        urls.map((url) => (
+          <li>
+            <a href={url}>{url.slice(1).replaceAll("-", " ")}</a>
+          </li>
+        ))
+      }
     </ul>
   </main>
 </MainLayout>
