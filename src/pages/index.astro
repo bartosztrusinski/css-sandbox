@@ -6,7 +6,7 @@ const urls = ["/full-screen-menu", "/grid-height-transition"];
 
 <MainLayout>
   <main>
-    <h1>Space for CSS things ✨🖌️</h1>
+    <h1><span>🌠</span>Space for CSS things</h1>
     <ul>
       {
         urls.map((url) => (
@@ -29,6 +29,7 @@ const urls = ["/full-screen-menu", "/grid-height-transition"];
     background-size: 24rem, 340vh;
     background-position: center;
     backdrop-filter: contrast(1.08) saturate(1.24);
+    padding: 2rem 2rem 5rem;
   }
 
   main {
@@ -44,6 +45,16 @@ const urls = ["/full-screen-menu", "/grid-height-transition"];
     text-align: center;
     text-shadow: 0 4px 3px var(--color-primary);
     text-wrap: pretty;
+
+    @media (max-width: 657px) {
+      font-size: 3rem;
+
+      & span {
+        display: block;
+        font-size: 4rem;
+        padding: 0.5rem;
+      }
+    }
   }
 
   ul {
@@ -52,7 +63,7 @@ const urls = ["/full-screen-menu", "/grid-height-transition"];
 
   li {
     margin-block: 1rem;
-    padding-left: 0.3rem;
+    padding-left: 0.5rem;
 
     &::marker {
       font-size: 1.6rem;
