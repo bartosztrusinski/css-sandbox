@@ -4,14 +4,14 @@ import MainLayout from "../layouts/MainLayout.astro";
 
 <MainLayout title="Grid Height Transition">
   <main>
-    <h1>Going from 0 to auto, the easy way</h1>
     <article>
+      <h1>Going from 0 to auto - the easy way</h1>
       <section>
-        <h2 id="panel1-title">
+        <h3 id="panel1-title">
           <button aria-expanded="false" aria-controls="panel1-content">
             Grid is awesome
           </button>
-        </h2>
+        </h3>
         <div
           id="panel1-content"
           role="region"
@@ -29,11 +29,11 @@ import MainLayout from "../layouts/MainLayout.astro";
         </div>
       </section>
       <section>
-        <h2 id="panel2-title">
+        <h3 id="panel2-title">
           <button aria-expanded="true" aria-controls="panel2-content">
             It's full of neat tricks
           </button>
-        </h2>
+        </h3>
         <div
           id="panel2-content"
           role="region"
@@ -63,11 +63,11 @@ import MainLayout from "../layouts/MainLayout.astro";
         </div>
       </section>
       <section>
-        <h2 id="panel3-title">
+        <h3 id="panel3-title">
           <button aria-expanded="true" aria-controls="panel3-content">
             Tell me more
           </button>
-        </h2>
+        </h3>
         <div
           id="panel3-content"
           role="region"
@@ -83,14 +83,15 @@ import MainLayout from "../layouts/MainLayout.astro";
         </div>
       </section>
     </article>
-
-    <h2>Other content here</h2>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit ea,
-      minus iste vero laborum voluptate quae nihil delectus deserunt dolor harum
-      molestiae magnam facilis eligendi quas adipisci dicta. Tempora,
-      voluptatibus?
-    </p>
+    <article>
+      <h2>Other content here</h2>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit ea,
+        minus iste vero laborum voluptate quae nihil delectus deserunt dolor
+        harum molestiae magnam facilis eligendi quas adipisci dicta. Tempora,
+        voluptatibus?
+      </p>
+    </article>
   </main>
 </MainLayout>
 
@@ -100,7 +101,7 @@ import MainLayout from "../layouts/MainLayout.astro";
   panels.forEach((panel) => {
     panel.addEventListener("click", (event) => {
       const target = event.currentTarget as HTMLElement;
-      const panelBtn = target.querySelector("section button") as HTMLElement;
+      const panelBtn = target.querySelector("button") as HTMLElement;
       const panelContent = target.querySelector("section > div") as HTMLElement;
       const isPanelOpen = panelBtn.getAttribute("aria-expanded") === "true";
 
@@ -111,44 +112,85 @@ import MainLayout from "../layouts/MainLayout.astro";
 </script>
 
 <style>
+  body {
+    background-image: linear-gradient(
+      120deg,
+      hsl(258, 69%, 28%),
+      hsl(337, 76%, 33%)
+    );
+    backdrop-filter: saturate(1.2) contrast(1.2);
+    display: flex;
+    align-items: center;
+  }
+  main {
+    width: min(80ch, 100% - 4rem);
+    margin-inline: auto;
+    padding: 2rem;
+    border-radius: 1rem;
+    background-color: hsl(237, 21%, 17%);
+    color: hsl(0, 0%, 96%);
+    box-shadow: -0.1rem 0.1rem 0.8rem 0.4rem hsla(240, 17%, 8%, 0.5);
+  }
+
   h1,
+  h2,
+  h3 {
+    text-wrap: pretty;
+    padding-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  h1 {
+    font-size: 2.4rem;
+    padding-bottom: 1rem;
+    color: var(--color-primary);
+  }
+
   h2 {
-    padding-block: 1rem;
+    font-size: 2.1rem;
+    color: var(--color-primary);
+  }
+
+  h3 {
+    font-size: 1.8rem;
   }
 
   p {
-    padding: 0.5rem 0;
-  }
-
-  main {
-    padding: 2rem;
-    max-width: 42rem;
-    margin-inline: auto;
+    font-size: 1.1rem;
+    line-height: 1.6;
   }
 
   article {
-    background: #222;
-    color: #fafafa;
-    padding: 1rem;
+    margin-bottom: 1.6rem;
   }
-  section {
-    border: 1px solid #fafafa;
-    padding: 1rem;
 
-    & button {
-      background: inherit;
-      color: inherit;
-      border: none;
-      font-size: 2rem;
+  section {
+    --border-radius: 0.4rem;
+    --border-width: 0.125rem;
+
+    background-color: hsl(233, 17%, 21%);
+    border: var(--border-width) solid hsl(253, 7%, 52%);
+    border-block-width: calc(var(--border-width) / 2);
+    padding: 1rem 1.6rem;
+
+    &:first-of-type {
+      border-top-width: var(--border-width);
+      border-top-left-radius: var(--border-radius);
+      border-top-right-radius: var(--border-radius);
+    }
+
+    &:last-of-type {
+      border-bottom-width: var(--border-width);
+      border-bottom-left-radius: var(--border-radius);
+      border-bottom-right-radius: var(--border-radius);
     }
 
     & > div {
       display: grid;
       grid-template-rows: 0fr;
-      transition: grid-template-rows 300ms ease-in-out;
-      font-size: 1.2rem;
+      transition: grid-template-rows 240ms ease-in-out;
 
-      & div {
+      & > div {
         overflow: hidden;
       }
 
@@ -156,5 +198,15 @@ import MainLayout from "../layouts/MainLayout.astro";
         grid-template-rows: 1fr;
       }
     }
+  }
+
+  button {
+    background: inherit;
+    color: inherit;
+    border: none;
+    outline: none;
+    font-size: inherit;
+    appearance: none;
+    cursor: pointer;
   }
 </style>
