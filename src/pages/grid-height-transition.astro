@@ -3,23 +3,17 @@ import MainLayout from "../layouts/MainLayout.astro";
 ---
 
 <MainLayout title="Grid Height Transition">
-  <div class="container">
+  <main>
     <h1>Going from 0 to auto, the easy way</h1>
-
-    <div class="accordion">
-      <div class="accordion__panel">
+    <article>
+      <section>
         <h2 id="panel1-title">
-          <button
-            class="accordion__trigger"
-            aria-expanded="false"
-            aria-controls="panel1-content"
-          >
+          <button aria-expanded="false" aria-controls="panel1-content">
             Grid is awesome
           </button>
         </h2>
         <div
           id="panel1-content"
-          class="accordion__content"
           role="region"
           aria-hidden="true"
           aria-labelledby="panel1-title"
@@ -33,20 +27,15 @@ import MainLayout from "../layouts/MainLayout.astro";
             </p>
           </div>
         </div>
-      </div>
-      <div class="accordion__panel">
+      </section>
+      <section>
         <h2 id="panel2-title">
-          <button
-            class="accordion__trigger"
-            aria-expanded="true"
-            aria-controls="panel2-content"
-          >
+          <button aria-expanded="true" aria-controls="panel2-content">
             It's full of neat tricks
           </button>
         </h2>
         <div
           id="panel2-content"
-          class="accordion__content"
           role="region"
           aria-hidden="false"
           aria-labelledby="panel2-title"
@@ -72,20 +61,15 @@ import MainLayout from "../layouts/MainLayout.astro";
             </p>
           </div>
         </div>
-      </div>
-      <div class="accordion__panel">
+      </section>
+      <section>
         <h2 id="panel3-title">
-          <button
-            class="accordion__trigger"
-            aria-expanded="true"
-            aria-controls="panel3-content"
-          >
+          <button aria-expanded="true" aria-controls="panel3-content">
             Tell me more
           </button>
         </h2>
         <div
           id="panel3-content"
-          class="accordion__content"
           role="region"
           aria-hidden="false"
           aria-labelledby="panel3-title"
@@ -97,8 +81,8 @@ import MainLayout from "../layouts/MainLayout.astro";
             </p>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </article>
 
     <h2>Other content here</h2>
     <p>
@@ -107,32 +91,17 @@ import MainLayout from "../layouts/MainLayout.astro";
       molestiae magnam facilis eligendi quas adipisci dicta. Tempora,
       voluptatibus?
     </p>
-    <p>
-      Soluta in, ab facere unde molestiae incidunt blanditiis, tempore illo,
-      inventore iure laborum sunt. Hic quibusdam facere nesciunt corporis
-      consequatur illum ipsa quas, necessitatibus odio officia corrupti placeat
-      quae minima!
-    </p>
-    <p>
-      Aliquid ab labore corporis animi culpa ex omnis est quod itaque quo id
-      eius, dolores, asperiores delectus ut magnam exercitationem in explicabo
-      nulla, unde quae reprehenderit quia ducimus. Architecto, dolor.
-    </p>
-  </div>
+  </main>
 </MainLayout>
 
 <script>
-  const panels = document.querySelectorAll(".accordion__panel");
+  const panels = document.querySelectorAll("section");
 
   panels.forEach((panel) => {
     panel.addEventListener("click", (event) => {
       const target = event.currentTarget as HTMLElement;
-      const panelBtn = target.querySelector(
-        ".accordion__trigger",
-      ) as HTMLElement;
-      const panelContent = target.querySelector(
-        ".accordion__content",
-      ) as HTMLElement;
+      const panelBtn = target.querySelector("section button") as HTMLElement;
+      const panelContent = target.querySelector("section > div") as HTMLElement;
       const isPanelOpen = panelBtn.getAttribute("aria-expanded") === "true";
 
       panelBtn.setAttribute("aria-expanded", String(!isPanelOpen));
@@ -144,49 +113,48 @@ import MainLayout from "../layouts/MainLayout.astro";
 <style>
   h1,
   h2 {
-    padding: 1rem 0;
+    padding-block: 1rem;
   }
 
   p {
     padding: 0.5rem 0;
   }
 
-  .container {
+  main {
     padding: 2rem;
     max-width: 42rem;
     margin-inline: auto;
   }
 
-  .accordion {
+  article {
     background: #222;
     color: #fafafa;
     padding: 1rem;
   }
-
-  .accordion__panel {
+  section {
     border: 1px solid #fafafa;
     padding: 1rem;
-  }
 
-  .accordion__trigger {
-    background: inherit;
-    color: inherit;
-    border: none;
-    font-size: 2rem;
-  }
+    & button {
+      background: inherit;
+      color: inherit;
+      border: none;
+      font-size: 2rem;
+    }
 
-  .accordion__content {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 300ms ease-in-out;
-    font-size: 1.2rem;
-  }
+    & > div {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 300ms ease-in-out;
+      font-size: 1.2rem;
 
-  .accordion__content[aria-hidden="true"] {
-    grid-template-rows: 1fr;
-  }
+      & div {
+        overflow: hidden;
+      }
 
-  .accordion__content > div {
-    overflow: hidden;
+      &[aria-hidden="true"] {
+        grid-template-rows: 1fr;
+      }
+    }
   }
 </style>
