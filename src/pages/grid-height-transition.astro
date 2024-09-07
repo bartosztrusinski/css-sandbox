@@ -1,87 +1,66 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+
+type Panel = {
+  id: number;
+  title: string;
+  content: string;
+  isExpanded: boolean;
+};
+
+const panels: Panel[] = [
+  {
+    id: 1,
+    title: "Grid is awesome",
+    content:
+      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt necessitatibus, odit provident, inventore similique ea ex quis reiciendis repudiandae alias fugiat consequatur autem ipsa, animi quibusdam voluptates voluptate beatae natus?",
+    isExpanded: true,
+  },
+  {
+    id: 2,
+    title: "It's full of neat tricks",
+    content:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet vitae harum dolorem ab eligendi. Minima, at. Distinctio nesciunt sapiente provident error vero ex. Totam non nobis ipsa, facilis cumque autem?",
+    isExpanded: false,
+  },
+  {
+    id: 3,
+    title: "Tell me more",
+    content:
+      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto, amet!",
+    isExpanded: false,
+  },
+];
 ---
 
 <MainLayout title="Grid Height Transition">
   <main>
     <article>
       <h1>Going from 0 to auto - the easy way</h1>
-      <section>
-        <h3 id="panel1-title">
-          <button aria-expanded="false" aria-controls="panel1-content">
-            Grid is awesome
-          </button>
-        </h3>
-        <div
-          id="panel1-content"
-          role="region"
-          aria-hidden="true"
-          aria-labelledby="panel1-title"
-        >
-          <div>
-            <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt
-              necessitatibus, odit provident, inventore similique ea ex quis
-              reiciendis repudiandae alias fugiat consequatur autem ipsa, animi
-              quibusdam voluptates voluptate beatae natus?
-            </p>
-          </div>
-        </div>
-      </section>
-      <section>
-        <h3 id="panel2-title">
-          <button aria-expanded="true" aria-controls="panel2-content">
-            It's full of neat tricks
-          </button>
-        </h3>
-        <div
-          id="panel2-content"
-          role="region"
-          aria-hidden="false"
-          aria-labelledby="panel2-title"
-        >
-          <div>
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet
-              vitae harum dolorem ab eligendi. Minima, at. Distinctio nesciunt
-              sapiente provident error vero ex. Totam non nobis ipsa, facilis
-              cumque autem?
-            </p>
-            <p>
-              Laudantium doloribus voluptatem deserunt tempore et quo dolores
-              iusto officia iure vero! Reiciendis animi, facilis dolore est id
-              suscipit quasi error maiores harum nulla, commodi vero, nobis
-              tenetur quaerat aliquid.
-            </p>
-            <p>
-              Vero iure obcaecati architecto ex quisquam consequatur, non earum
-              in temporibus sint ducimus. Voluptatibus exercitationem, magnam ad
-              assumenda et natus minima sit minus molestiae soluta iure
-              quibusdam nam, debitis a.
-            </p>
-          </div>
-        </div>
-      </section>
-      <section>
-        <h3 id="panel3-title">
-          <button aria-expanded="true" aria-controls="panel3-content">
-            Tell me more
-          </button>
-        </h3>
-        <div
-          id="panel3-content"
-          role="region"
-          aria-hidden="false"
-          aria-labelledby="panel3-title"
-        >
-          <div>
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto,
-              amet!
-            </p>
-          </div>
-        </div>
-      </section>
+      {
+        panels.map((panel) => (
+          <section>
+            <h3 id={`panel${panel.id}-title`}>
+              <button
+                aria-expanded={panel.isExpanded}
+                aria-controls={`panel${panel.id}-content`}
+              >
+                {panel.title}
+              </button>
+            </h3>
+            <div
+              id={`panel${panel.id}-content`}
+              role="region"
+              aria-hidden={!panel.isExpanded}
+              aria-labelledby={`panel${panel.id}-title`}
+            >
+              <div>
+                <p>{panel.content}</p>
+              </div>
+            </div>
+          </section>
+        ))
+      }
     </article>
     <article>
       <h2>Other content here</h2>
@@ -99,14 +78,13 @@ import MainLayout from "../layouts/MainLayout.astro";
   const panels = document.querySelectorAll("section");
 
   panels.forEach((panel) => {
-    panel.addEventListener("click", (event) => {
-      const target = event.currentTarget as HTMLElement;
-      const panelBtn = target.querySelector("button") as HTMLElement;
-      const panelContent = target.querySelector("section > div") as HTMLElement;
-      const isPanelOpen = panelBtn.getAttribute("aria-expanded") === "true";
+    panel.addEventListener("click", () => {
+      const contentDiv = panel.querySelector("section > div")!;
+      const button = panel.querySelector("button")!;
+      const isPanelOpen = button.getAttribute("aria-expanded") === "true";
 
-      panelBtn.setAttribute("aria-expanded", String(!isPanelOpen));
-      panelContent.setAttribute("aria-hidden", String(isPanelOpen));
+      contentDiv.setAttribute("aria-hidden", String(isPanelOpen));
+      button.setAttribute("aria-expanded", String(!isPanelOpen));
     });
   });
 </script>
@@ -172,6 +150,7 @@ import MainLayout from "../layouts/MainLayout.astro";
     border: var(--border-width) solid hsl(253, 7%, 52%);
     border-block-width: calc(var(--border-width) / 2);
     padding: 1rem 1.6rem;
+    cursor: pointer;
 
     &:first-of-type {
       border-top-width: var(--border-width);
@@ -187,7 +166,7 @@ import MainLayout from "../layouts/MainLayout.astro";
 
     & > div {
       display: grid;
-      grid-template-rows: 0fr;
+      grid-template-rows: 1fr;
       transition: grid-template-rows 240ms ease-in-out;
 
       & > div {
@@ -195,7 +174,7 @@ import MainLayout from "../layouts/MainLayout.astro";
       }
 
       &[aria-hidden="true"] {
-        grid-template-rows: 1fr;
+        grid-template-rows: 0fr;
       }
     }
   }
