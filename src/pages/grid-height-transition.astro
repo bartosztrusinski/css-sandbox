@@ -35,34 +35,30 @@ const panels: Panel[] = [
 
 <MainLayout title="Grid Height Transition">
   <main>
-    <article>
+    <section>
       <h1>Going from 0 to auto - the easy way</h1>
       {
         panels.map((panel) => (
-          <section>
-            <h3 id={`panel${panel.id}-title`}>
-              <button
-                aria-expanded={panel.isExpanded}
-                aria-controls={`panel${panel.id}-content`}
-              >
-                {panel.title}
-              </button>
-            </h3>
-            <div
-              id={`panel${panel.id}-content`}
-              role="region"
-              aria-hidden={!panel.isExpanded}
-              aria-labelledby={`panel${panel.id}-title`}
+          <article>
+            <button
+              aria-expanded={panel.isExpanded}
+              aria-controls={`panel${panel.id}-content`}
             >
-              <div>
+              <h3 id={`panel${panel.id}-title`}>{panel.title}</h3>
+              <section
+                id={`panel${panel.id}-content`}
+                role="region"
+                aria-hidden={!panel.isExpanded}
+                aria-labelledby={`panel${panel.id}-title`}
+              >
                 <p>{panel.content}</p>
-              </div>
-            </div>
-          </section>
+              </section>
+            </button>
+          </article>
         ))
       }
-    </article>
-    <article>
+    </section>
+    <section>
       <h2>Other content here</h2>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit ea,
@@ -70,20 +66,20 @@ const panels: Panel[] = [
         harum molestiae magnam facilis eligendi quas adipisci dicta. Tempora,
         voluptatibus?
       </p>
-    </article>
+    </section>
   </main>
 </MainLayout>
 
 <script>
-  const panels = document.querySelectorAll("section");
+  const panels = document.querySelectorAll("article");
 
   panels.forEach((panel) => {
     panel.addEventListener("click", () => {
-      const contentDiv = panel.querySelector("section > div")!;
+      const contentEl = panel.querySelector("section")!;
       const button = panel.querySelector("button")!;
       const isPanelOpen = button.getAttribute("aria-expanded") === "true";
 
-      contentDiv.setAttribute("aria-hidden", String(isPanelOpen));
+      contentEl.setAttribute("aria-hidden", String(isPanelOpen));
       button.setAttribute("aria-expanded", String(!isPanelOpen));
     });
   });
@@ -108,6 +104,10 @@ const panels: Panel[] = [
     background-color: hsl(237, 21%, 17%);
     color: hsl(0, 0%, 96%);
     box-shadow: -0.1rem 0.1rem 0.8rem 0.4rem hsla(240, 17%, 8%, 0.5);
+
+    & > section {
+      margin-bottom: 1.6rem;
+    }
   }
 
   h1,
@@ -139,18 +139,12 @@ const panels: Panel[] = [
   }
 
   article {
-    margin-bottom: 1.6rem;
-  }
-
-  section {
     --border-radius: 0.4rem;
     --border-width: 0.125rem;
 
     background-color: hsl(233, 17%, 21%);
     border: var(--border-width) solid hsl(253, 7%, 52%);
     border-block-width: calc(var(--border-width) / 2);
-    padding: 1rem 1.6rem;
-    cursor: pointer;
 
     &:first-of-type {
       border-top-width: var(--border-width);
@@ -164,12 +158,12 @@ const panels: Panel[] = [
       border-bottom-right-radius: var(--border-radius);
     }
 
-    & > div {
+    & section {
       display: grid;
       grid-template-rows: 1fr;
       transition: grid-template-rows 240ms ease-in-out;
 
-      & > div {
+      & p {
         overflow: hidden;
       }
 
@@ -180,12 +174,19 @@ const panels: Panel[] = [
   }
 
   button {
-    background: inherit;
-    color: inherit;
-    border: none;
-    outline: none;
-    font-size: inherit;
+    width: 100%;
     appearance: none;
+    background: inherit;
+    outline: none;
+    padding: 1rem 1.6rem;
+    text-align: start;
+    border: none;
+    color: inherit;
+    font-size: inherit;
     cursor: pointer;
+
+    &:focus-visible h3 {
+      text-decoration: underline solid var(--color-primary) 0.3rem;
+    }
   }
 </style>
