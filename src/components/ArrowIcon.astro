@@ -1,0 +1,32 @@
+---
+type Props = {
+  isOpen: boolean;
+};
+
+const { isOpen } = Astro.props;
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  class={isOpen ? "open" : ""}
+>
+  <path
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5"></path>
+</svg>
+
+<style>
+  svg {
+    fill: none;
+    stroke-width: 2.5;
+    stroke: currentColor;
+    width: 1.8rem;
+    transition: transform 200ms linear;
+  }
+
+  .open {
+    transform: rotate(-180deg);
+  }
+</style>
