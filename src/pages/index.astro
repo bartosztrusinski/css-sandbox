@@ -1,7 +1,12 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+import fs from "node:fs/promises";
 
-const urls = ["/full-screen-menu", "/grid-height-transition"];
+const pagesDirUrl = new URL("../pages", import.meta.url);
+const pageFiles = await fs.readdir(pagesDirUrl);
+const pageUrls = pageFiles
+  .filter((file) => !file.startsWith("index"))
+  .map((file) => file.split(".")[0]);
 ---
 
 <MainLayout>
@@ -9,9 +14,9 @@ const urls = ["/full-screen-menu", "/grid-height-transition"];
     <h1><span>🌠</span>Space for CSS things</h1>
     <ul>
       {
-        urls.map((url) => (
+        pageUrls.map((pageUrl) => (
           <li>
-            <a href={url}>{url.slice(1).replaceAll("-", " ")}</a>
+            <a href={pageUrl}>{pageUrl.replaceAll("-", " ")}</a>
           </li>
         ))
       }
