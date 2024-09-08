@@ -1,4 +1,5 @@
 ---
+import ArrowIcon from "../components/ArrowIcon.astro";
 import MainLayout from "../layouts/MainLayout.astro";
 
 type Panel = {
@@ -44,12 +45,15 @@ const panels: Panel[] = [
               aria-expanded={panel.isExpanded}
               aria-controls={`panel${panel.id}-content`}
             >
-              <h3 id={`panel${panel.id}-title`}>{panel.title}</h3>
+              <header id={`panel${panel.id}-heading`}>
+                <h3>{panel.title}</h3>
+                <ArrowIcon isOpen={panel.isExpanded} />
+              </header>
               <section
                 id={`panel${panel.id}-content`}
                 role="region"
                 aria-hidden={!panel.isExpanded}
-                aria-labelledby={`panel${panel.id}-title`}
+                aria-labelledby={`panel${panel.id}-heading`}
               >
                 <p>{panel.content}</p>
               </section>
@@ -77,10 +81,12 @@ const panels: Panel[] = [
     panel.addEventListener("click", () => {
       const contentEl = panel.querySelector("section")!;
       const button = panel.querySelector("button")!;
+      const svg = button.querySelector("svg")!;
       const isPanelOpen = button.getAttribute("aria-expanded") === "true";
 
       contentEl.setAttribute("aria-hidden", String(isPanelOpen));
       button.setAttribute("aria-expanded", String(!isPanelOpen));
+      svg.classList.toggle("open", !isPanelOpen);
     });
   });
 </script>
@@ -188,5 +194,11 @@ const panels: Panel[] = [
     &:focus-visible h3 {
       text-decoration: underline solid var(--color-primary) 0.3rem;
     }
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 </style>
