@@ -14,21 +14,21 @@ const panels: Panel[] = [
     id: 1,
     title: "Grid is awesome",
     content:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt necessitatibus, odit provident, inventore similique ea ex quis reiciendis repudiandae alias fugiat consequatur autem ipsa, animi quibusdam voluptates voluptate beatae natus?",
+      "CSS Grid is awesome because it allows for two-dimensional layouts, simplifies complex designs, and enhances responsiveness. It offers powerful alignment control, intuitive syntax, and excellent browser support, making it an essential tool for modern web development.",
     isExpanded: true,
   },
   {
     id: 2,
     title: "It's full of neat tricks",
     content:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet vitae harum dolorem ab eligendi. Minima, at. Distinctio nesciunt sapiente provident error vero ex. Totam non nobis ipsa, facilis cumque autem?",
+      'Using `grid-template-rows` in your CSS allows for smooth height transitions. In the provided code, the section element transitions its height from `1fr` to `0fr` when `aria-hidden="true"`, creating a smooth collapsing effect. This enhances user experience with clean, CSS-only animations.',
     isExpanded: false,
   },
   {
     id: 3,
     title: "Tell me more",
     content:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto, amet!",
+      "This page is structured with a main layout and dynamically renders each panel's content based on its state.",
     isExpanded: false,
   },
 ];
@@ -55,7 +55,13 @@ const panels: Panel[] = [
                 aria-hidden={!panel.isExpanded}
                 aria-labelledby={`panel${panel.id}-heading`}
               >
-                <p>{panel.content}</p>
+                <p>
+                  {panel.content
+                    .split("`")
+                    .map((text, index) =>
+                      index % 2 === 0 ? text : <code>{text}</code>,
+                    )}
+                </p>
               </section>
             </button>
           </article>
@@ -64,12 +70,14 @@ const panels: Panel[] = [
     </section>
     <section>
       <h2>Other content here</h2>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit ea,
-        minus iste vero laborum voluptate quae nihil delectus deserunt dolor
-        harum molestiae magnam facilis eligendi quas adipisci dicta. Tempora,
-        voluptatibus?
-      </p>
+      <p>This page contains a sprinkle of JavaScript</p>
+      <ul>
+        <li>
+          Toggles the panel's open state by updating <code>aria-expanded</code> and
+          <code>aria-hidden</code> attributes
+        </li>
+        <li>Toggles the <code>open</code> class on an SVG icon.</li>
+      </ul>
     </section>
   </main>
 </MainLayout>
@@ -101,6 +109,8 @@ const panels: Panel[] = [
     backdrop-filter: saturate(1.2) contrast(1.2);
     display: flex;
     align-items: center;
+    font-size: 1.1rem;
+    line-height: 1.6;
   }
   main {
     width: min(80ch, 100% - 4rem);
@@ -137,11 +147,6 @@ const panels: Panel[] = [
 
   h3 {
     font-size: 1.8rem;
-  }
-
-  p {
-    font-size: 1.1rem;
-    line-height: 1.6;
   }
 
   article {
@@ -200,5 +205,9 @@ const panels: Panel[] = [
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  ul {
+    padding-left: 1.5rem;
   }
 </style>
