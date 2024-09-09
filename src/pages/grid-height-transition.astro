@@ -21,7 +21,7 @@ const panels: Panel[] = [
     id: 2,
     title: "It's full of neat tricks",
     content:
-      'Using `grid-template-rows` in your CSS allows for smooth height transitions. In the provided code, the section element transitions its height from `1fr` to `0fr` when `aria-hidden="true"`, creating a smooth collapsing effect. This enhances user experience with clean, CSS-only animations.',
+      'Using `grid-template-rows` in your CSS allows for smooth height transitions. In the provided code, the section element transitions its height from `1fr` to `0fr` when `aria-hidden="true"` is set, creating a smooth collapsing effect. This enhances user experience with clean, CSS-only animations.',
     isExpanded: false,
   },
   {
@@ -70,13 +70,19 @@ const panels: Panel[] = [
     </section>
     <section>
       <h2>Other content here</h2>
-      <p>This page contains a sprinkle of JavaScript</p>
+      <p>
+        This page contains a sprinkle of JavaScript. When a panel is clicked,
+        the following happens:
+      </p>
       <ul>
         <li>
-          Toggles the panel's open state by updating <code>aria-expanded</code> and
+          The panel's open state is toggled by updating
+          <code>aria-expanded</code> and
           <code>aria-hidden</code> attributes
         </li>
-        <li>Toggles the <code>open</code> class on an SVG icon.</li>
+        <li>
+          The arrow icon transitions by toggling the <code>open</code> class on it.
+        </li>
       </ul>
     </section>
   </main>
@@ -110,8 +116,8 @@ const panels: Panel[] = [
     display: flex;
     align-items: center;
     font-size: 1.1rem;
-    line-height: 1.6;
   }
+
   main {
     width: min(80ch, 100% - 4rem);
     margin-inline: auto;
@@ -147,6 +153,32 @@ const panels: Panel[] = [
 
   h3 {
     font-size: 1.8rem;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  p,
+  ul {
+    line-height: 1.6;
+    font-size: 1.1rem;
+  }
+
+  ul {
+    padding-left: 1.5rem;
+  }
+
+  code {
+    background-color: hsl(278, 86%, 6%);
+    color: hsl(310, 88%, 43%);
+    padding: 0.125rem 0.3rem;
+    text-wrap: nowrap;
+    border-radius: 0.2rem;
+    font-size: 0.9em;
+    font-family: "DM Mono", FiraSans, "Courier New", Courier, monospace;
   }
 
   article {
@@ -199,15 +231,5 @@ const panels: Panel[] = [
     &:focus-visible h3 {
       text-decoration: underline solid var(--color-primary) 0.3rem;
     }
-  }
-
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  ul {
-    padding-left: 1.5rem;
   }
 </style>
