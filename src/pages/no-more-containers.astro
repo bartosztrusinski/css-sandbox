@@ -28,14 +28,14 @@ import MainLayout from "../layouts/MainLayout.astro";
       </ul>
     </nav>
   </header>
-  <main>
+  <main class="content-grid">
     <h1>No more containers!</h1>
     <p>
       It can be useful to have a system in place that's easy to go full-width,
       or have a "breakout" section for calls to action or blockquotes, or other
       things you want to call attention to.
     </p>
-    <p>
+    <p class="breakout">
       Traditionally, we use a container or wrapper, which we need to close, and
       then open again, but thanks to grid, and with the recent additions of
       subgrid to all the evergreen browsers, maybe there's a better way to do
@@ -50,7 +50,7 @@ import MainLayout from "../layouts/MainLayout.astro";
       working in a specific way.
     </p>
 
-    <section>
+    <section class="full-width">
       <h2>This section has a different background-color</h2>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam
@@ -73,7 +73,7 @@ import MainLayout from "../layouts/MainLayout.astro";
       laboriosam vero eum optio, saepe dolorem exercitationem quod asperiores
       iste?
     </p>
-    <p>
+    <p class="breakout call-to-action">
       Not sure why, but we could set things up if ever you wanted random text to
       be full-bleed without bothering with a div or anything on the outside of
       it as well
@@ -86,7 +86,7 @@ import MainLayout from "../layouts/MainLayout.astro";
     </p>
 
     <h3>Images as full-bleed works too</h3>
-    <img src="https://unsplash.it/1600/400" alt="" />
+    <img class="full-width" src="https://unsplash.it/1600/400" alt="" />
     <p>
       Exercitationem dolorum animi at autem tempore omnis, dolorem saepe sint
       totam architecto, vitae cum doloribus illo? Laudantium laboriosam saepe
@@ -98,7 +98,6 @@ import MainLayout from "../layouts/MainLayout.astro";
       a. Aut mollitia magnam quo. Sequi repellendus voluptas quia suscipit autem
       iste! Accusamus, delectus beatae inventore obcaecati ut totam ab.
     </p>
-
     <p>
       Eligendi ea maiores asperiores sed nobis qui, animi sint? Ratione
       laboriosam cum quasi repudiandae in, necessitatibus veritatis nihil
@@ -116,8 +115,86 @@ import MainLayout from "../layouts/MainLayout.astro";
       corporis laborum quas? Quis libero aperiam est fuga veniam eos tenetur?
     </p>
 
-    <section>
+    <footer class="full-width">
       <h3>content</h3>
-    </section>
+    </footer>
   </main>
 </MainLayout>
+
+<style>
+  .content-grid,
+  .full-width {
+    --padding-inline: 2rem;
+    --content-max-width: 65ch;
+    --breakout-max-width: 80ch;
+
+    --breakout-size: calc(
+      (var(--breakout-max-width) - var(--content-max-width)) / 2
+    );
+
+    --full-width: minmax(var(--padding-inline), 1fr);
+    --breakout: minmax(0, var(--breakout-size));
+    --content: min(100% - var(--padding-inline) * 2, var(--content-max-width));
+
+    display: grid;
+    grid-template-columns:
+      [full-width-start] var(--full-width)
+      [breakout-start] var(--breakout)
+      [content-start] var(--content) [content-end]
+      var(--breakout) [breakout-end]
+      var(--full-width) [full-width-end];
+
+    & > :not(.breakout, .full-width) {
+      grid-column: content;
+    }
+
+    & > .breakout {
+      grid-column: breakout;
+    }
+
+    & > .full-width {
+      grid-column: full-width;
+    }
+  }
+
+  img.full-width {
+    width: 100%;
+    max-height: 45vh;
+    object-fit: cover;
+  }
+
+  h1 {
+    font-size: 5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-family: system-ui;
+  }
+
+  h2 {
+    font-size: 2rem;
+    margin-block: 1rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  p {
+    padding-block: 1rem;
+  }
+
+  section {
+    background-color: hsl(219, 76%, 25%);
+    padding-block: 2.5rem;
+  }
+
+  footer {
+    background-color: hsl(219, 76%, 25%);
+    padding-block: 0.5rem;
+  }
+
+  .call-to-action {
+    background-color: hsl(0, 0%, 21%);
+    padding: 1rem;
+  }
+</style>
