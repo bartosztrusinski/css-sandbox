@@ -7,7 +7,7 @@ const routes = ["Home", "Blog", "Courses", "Goodies", "About"];
 <MainLayout title="Full-screen Menu">
   <button class="open">Open menu</button>
   <dialog>
-    <main>
+    <nav>
       <button autofocus class="close">close</button>
       <ul>
         {
@@ -18,7 +18,7 @@ const routes = ["Home", "Blog", "Courses", "Goodies", "About"];
           ))
         }
       </ul>
-    </main>
+    </nav>
   </dialog>
 </MainLayout>
 
@@ -51,13 +51,16 @@ const routes = ["Home", "Blog", "Courses", "Goodies", "About"];
     font-size: 2rem;
     cursor: pointer;
     outline: none;
+    background-color: var(--color-light);
+    color: var(--color-dark);
     appearance: none;
-    border: 0.125rem solid hsl(0 10% 10%);
+    border: 0.125rem solid transparent;
     transition: all 160ms ease-in-out;
 
     &:hover,
     &:focus-visible {
       transform: scale(1.08);
+      border-color: var(--color-primary);
     }
   }
 
@@ -93,7 +96,7 @@ const routes = ["Home", "Blog", "Courses", "Goodies", "About"];
     border: none;
   }
 
-  main {
+  nav {
     position: absolute;
     inset: 0;
     display: grid;
@@ -108,10 +111,6 @@ const routes = ["Home", "Blog", "Courses", "Goodies", "About"];
     font-size: clamp(2.1rem, 1.2rem + 3vw, 4rem);
     font-weight: 700;
     text-align: center;
-
-    &:hover li {
-      color: hsl(0 0% 0% / 0.2);
-    }
   }
 
   a {
@@ -123,13 +122,13 @@ const routes = ["Home", "Blog", "Courses", "Goodies", "About"];
 
   li {
     --color-bg: var(--color-accent, hsl(355 100% 84%));
+    color: var(--color-dark);
     padding: 0.5rem 0.2rem;
     cursor: pointer;
     transition: all 220ms ease-in-out;
 
     &:hover,
     &:focus-within {
-      color: hsl(0, 0%, 0%);
       letter-spacing: 0.1rem;
 
       &::before {
@@ -153,7 +152,7 @@ const routes = ["Home", "Blog", "Courses", "Goodies", "About"];
       text-align: center;
       width: 200vw;
       height: 100vh;
-      color: hsla(0, 0%, 0%, 0.1);
+      color: hsla(var(--color-dark-hsl), 0.1);
       opacity: 0;
       z-index: -1;
       font-weight: 900;
