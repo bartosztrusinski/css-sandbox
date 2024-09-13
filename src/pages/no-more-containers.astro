@@ -1,8 +1,11 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+import parseFilename from "../utils/getFilename";
+
+const title = parseFilename(import.meta.url);
 ---
 
-<MainLayout title="No more containers">
+<MainLayout title={title}>
   <header class="content-grid">
     <div class="breakout">
       <svg
@@ -184,7 +187,6 @@ import MainLayout from "../layouts/MainLayout.astro";
     padding-block: 1rem;
     margin-block-end: 2rem;
     background-color: hsl(175, 65%, 44%);
-    color: var(--color-light);
 
     & > div {
       display: flex;

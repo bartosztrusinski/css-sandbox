@@ -6,7 +6,7 @@ type Props = {
 };
 
 const { title } = Astro.props;
-const projectTitle = "CSS Sandbox";
+const projectName = "CSS Sandbox";
 const isHomePage = Astro.url.pathname === "/";
 ---
 
@@ -17,7 +17,7 @@ const isHomePage = Astro.url.pathname === "/";
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title ? `${title} | ${projectTitle}` : projectTitle}</title>
+    <title>{title ? `${title} | ${projectName}` : projectName}</title>
   </head>
   <body>
     <slot />
