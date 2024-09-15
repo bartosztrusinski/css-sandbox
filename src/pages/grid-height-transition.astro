@@ -1,6 +1,7 @@
 ---
 import ArrowIcon from "../components/ArrowIcon.astro";
 import MainLayout from "../layouts/MainLayout.astro";
+import parseFilename from "../utils/getFilename";
 
 type Panel = {
   id: number;
@@ -32,9 +33,11 @@ const panels: Panel[] = [
     isExpanded: false,
   },
 ];
+
+const title = parseFilename(import.meta.url);
 ---
 
-<MainLayout title="Grid Height Transition">
+<MainLayout title={title}>
   <main>
     <section>
       <h1>Going from 0 to auto - the easy way</h1>
@@ -106,6 +109,14 @@ const panels: Panel[] = [
 </script>
 
 <style>
+  @import url("https://fonts.googleapis.com/css2?family=DM+Mono&display=swap");
+
+  :root {
+    --padding-inline: clamp(2rem, 3vw, 4rem);
+    --spacing-top: clamp(2rem, 8rem - 9vw, 3.6rem);
+    --spacing-bottom: clamp(1rem, 4vw, 4rem);
+  }
+
   body {
     background-image: linear-gradient(
       120deg,
@@ -114,21 +125,25 @@ const panels: Panel[] = [
     );
     backdrop-filter: saturate(1.2) contrast(1.2);
     display: flex;
-    align-items: center;
-    font-size: 1.1rem;
+    place-content: start;
+    place-items: center;
+    flex-direction: column;
+    overflow: hidden;
   }
 
   main {
-    width: min(80ch, 100% - 4rem);
-    margin-inline: auto;
-    padding: 2rem;
-    border-radius: 1rem;
+    width: min(65ch, 100% - var(--padding-inline));
+    margin-block-start: var(--spacing-top);
+    margin-block-end: var(--spacing-bottom);
+    padding: clamp(1rem, 2vw, 2rem);
+    border-radius: 0.6rem;
     background-color: hsl(237, 21%, 17%);
     color: hsl(0, 0%, 96%);
     box-shadow: -0.1rem 0.1rem 0.8rem 0.4rem hsla(240, 17%, 8%, 0.5);
+    overflow: scroll;
 
     & > section {
-      margin-bottom: 1.6rem;
+      margin-bottom: clamp(1rem, 2vw, 2rem);
     }
   }
 
@@ -141,18 +156,18 @@ const panels: Panel[] = [
   }
 
   h1 {
-    font-size: 2.4rem;
+    font-size: var(--fs-600);
     padding-bottom: 1rem;
     color: var(--color-primary);
   }
 
   h2 {
-    font-size: 2.1rem;
+    font-size: var(--fs-600);
     color: var(--color-primary);
   }
 
   h3 {
-    font-size: 1.8rem;
+    font-size: var(--fs-500);
   }
 
   header {
@@ -164,7 +179,6 @@ const panels: Panel[] = [
   p,
   ul {
     line-height: 1.6;
-    font-size: 1.1rem;
   }
 
   ul {
@@ -175,10 +189,10 @@ const panels: Panel[] = [
     background-color: hsl(278, 86%, 6%);
     color: hsl(310, 88%, 43%);
     padding: 0.125rem 0.3rem;
-    text-wrap: nowrap;
     border-radius: 0.2rem;
     font-size: 0.9em;
-    font-family: "DM Mono", FiraSans, "Courier New", Courier, monospace;
+    font-family: "DM Mono", monospace;
+    text-wrap: nowrap;
   }
 
   article {
