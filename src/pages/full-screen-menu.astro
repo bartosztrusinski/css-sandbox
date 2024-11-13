@@ -1,6 +1,6 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import parseFilename from "../utils/getFilename";
+import parseFilename from "../utils/parseFilename";
 
 const routes = ["Home", "Blog", "Courses", "Goodies", "About"];
 const title = parseFilename(import.meta.url);
