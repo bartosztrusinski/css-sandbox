@@ -15,32 +15,44 @@ const title = parseFilename(import.meta.url);
 <style>
   @property --gradient-angle {
     syntax: "<angle>";
-    inherits: false;
     initial-value: 0deg;
+    inherits: false;
+  }
+
+  @property --gradient-percent {
+    syntax: "<percentage>";
+    initial-value: 5%;
+    inherits: false;
   }
 
   button {
     --color-shine: hsl(0, 0%, 100%);
     --color-highlight: hsl(229, 95%, 49%);
     --color-background: hsl(0, 0%, 0%);
-    --gradient-percent: 5%;
+    --shine-gradient-percent: 50%;
 
     padding: 1rem 5rem;
+    cursor: pointer;
     background:
-      linear-gradient(var(--color-background), var(--color-background))
-        padding-box,
+      linear-gradient(var(--color-background), var(--color-background)) padding-box,
       conic-gradient(
           from var(--gradient-angle),
-          transparent,
-          var(--color-highlight) calc(var(--gradient-percent)),
-          var(--color-shine) calc(var(--gradient-percent) * 2),
-          var(--color-highlight) calc(var(--gradient-percent) * 3),
-          transparent calc(var(--gradient-percent) * 4)
+          transparent calc(var(--shine-gradient-percent) - var(--gradient-percent) * 2),
+          var(--color-highlight) calc(var(--shine-gradient-percent) - var(--gradient-percent)),
+          var(--color-shine) var(--shine-gradient-percent),
+          var(--color-highlight) calc(var(--shine-gradient-percent) + var(--gradient-percent)),
+          transparent calc(var(--shine-gradient-percent) + var(--gradient-percent) * 2)
         )
         border-box;
     border-radius: 3rem;
     border: 1px solid transparent;
     animation: rotate-gradient 3000ms linear infinite;
+    transition: 200ms cubic-bezier(0.25, 1, 0.5, 1);
+    transition-property: --gradient-percent;
+
+    &:is(:hover, :focus-visible) {
+      --gradient-percent: 20%;
+    }
   }
 
   @keyframes rotate-gradient {
