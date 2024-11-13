@@ -13,6 +13,29 @@ const title = parseFilename(import.meta.url);
 </MainLayout>
 
 <style>
+  @property --angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  button {
+    padding: 1rem 5rem;
+    background:
+      linear-gradient(180deg, black, black) padding-box,
+      conic-gradient(from var(--angle), violet, indigo) border-box;
+    border-radius: 3rem;
+    border: 2px solid transparent;
+    animation: rotate 3000ms linear infinite;
+  }
+
+  @keyframes rotate {
+    to {
+      --angle: 360deg;
+    }
+  }
+
+  /* Other styles */
   body {
     --padding: 4rem;
     --max-width: 40ch;
