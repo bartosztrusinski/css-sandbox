@@ -1,0 +1,41 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import parseFilename from "../utils/parseFilename";
+
+const title = parseFilename(import.meta.url);
+---
+
+<MainLayout title={title}>
+  <main>
+    <h1>Shiny call-to-action button created using <span>@property</span></h1>
+    <button>Click me</button>
+  </main>
+</MainLayout>
+
+<style>
+  body {
+    --padding: 4rem;
+    --max-width: 40ch;
+
+    width: min(var(--max-width), 100% - var(--padding));
+    margin-inline: auto;
+  }
+
+  main {
+    text-align: center;
+    padding-top: 25vh;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+    text-wrap: pretty;
+    margin-bottom: 1em;
+
+    & > span {
+      text-decoration: underline 0.08em wavy var(--color-primary);
+      text-underline-offset: clamp(0.5rem, 0.2rem + 1vw, 0.8rem);
+      color: var(--color-primary);
+    }
+  }
+</style>
