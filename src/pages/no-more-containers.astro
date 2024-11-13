@@ -1,6 +1,6 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import parseFilename from "../utils/getFilename";
+import parseFilename from "../utils/parseFilename";
 
 const title = parseFilename(import.meta.url);
 ---
@@ -132,8 +132,8 @@ const title = parseFilename(import.meta.url);
   .content-grid,
   .full-width {
     --padding-inline: 2rem;
-    --content-max-width: 65ch;
-    --breakout-max-width: 80ch;
+    --content-max-width: 60ch;
+    --breakout-max-width: 72ch;
 
     --breakout-size: calc(
       (var(--breakout-max-width) - var(--content-max-width)) / 2

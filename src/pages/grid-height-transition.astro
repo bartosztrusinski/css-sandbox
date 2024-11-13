@@ -112,9 +112,10 @@ const title = parseFilename(import.meta.url);
   @import url("https://fonts.googleapis.com/css2?family=DM+Mono&display=swap");
 
   :root {
-    --padding-inline: clamp(2rem, 3vw, 4rem);
-    --spacing-top: clamp(2rem, 8rem - 9vw, 3.6rem);
-    --spacing-bottom: clamp(1rem, 4vw, 4rem);
+    --padding-inline: clamp(4rem, 3vw, 6rem);
+    --spacing-top: 4rem;
+    --spacing-bottom: clamp(2rem, 3vw, 4rem);
+    --card-padding: clamp(1.5rem, 3vw, 2.5rem);
   }
 
   body {
@@ -123,7 +124,7 @@ const title = parseFilename(import.meta.url);
       hsl(258, 69%, 28%),
       hsl(337, 76%, 33%)
     );
-    backdrop-filter: saturate(1.2) contrast(1.2);
+    /* backdrop-filter: saturate(1.2) contrast(1.2); */
     display: flex;
     place-content: start;
     place-items: center;
@@ -132,10 +133,10 @@ const title = parseFilename(import.meta.url);
   }
 
   main {
-    width: min(65ch, 100% - var(--padding-inline));
+    width: min(60ch, 100% - var(--padding-inline));
     margin-block-start: var(--spacing-top);
     margin-block-end: var(--spacing-bottom);
-    padding: clamp(1rem, 2vw, 2rem);
+    padding: var(--card-padding);
     border-radius: 0.6rem;
     background-color: hsl(237, 21%, 17%);
     color: hsl(0, 0%, 96%);
