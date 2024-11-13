@@ -30,6 +30,8 @@ const title = parseFilename(import.meta.url);
     --color-highlight: hsl(229, 95%, 49%);
     --color-background: hsl(0, 0%, 0%);
     --shine-gradient-percent: 50%;
+    --rotate-duration: 3s;
+    --rotate-animation: rotate-gradient linear infinite;
 
     padding: 1rem 5rem;
     cursor: pointer;
@@ -46,12 +48,16 @@ const title = parseFilename(import.meta.url);
         border-box;
     border-radius: 3rem;
     border: 1px solid transparent;
-    animation: rotate-gradient 3000ms linear infinite;
+    animation:
+      var(--rotate-animation) var(--rotate-duration),
+      var(--rotate-animation) calc(var(--rotate-duration) / 0.5) reverse paused;
+    animation-composition: add;
     transition: 200ms cubic-bezier(0.25, 1, 0.5, 1);
     transition-property: --gradient-percent;
 
     &:is(:hover, :focus-visible) {
       --gradient-percent: 20%;
+      animation-play-state: running;
     }
   }
 
