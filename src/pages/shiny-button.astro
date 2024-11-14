@@ -8,11 +8,13 @@ const title = parseFilename(import.meta.url);
 <MainLayout title={title}>
   <main>
     <h1>Shiny call-to-action button created using <span>@property</span></h1>
-    <button>Click me</button>
+    <button>Get unlimited access</button>
   </main>
 </MainLayout>
 
 <style>
+  @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
   @property --gradient-angle {
     syntax: "<angle>";
     initial-value: 0deg;
@@ -25,39 +27,85 @@ const title = parseFilename(import.meta.url);
     inherits: false;
   }
 
-  button {
+  :root {
     --color-shine: hsl(0, 0%, 100%);
     --color-highlight: hsl(229, 95%, 49%);
     --color-background: hsl(0, 0%, 0%);
-    --shine-gradient-percent: 50%;
-    --rotate-duration: 3s;
-    --rotate-animation: rotate-gradient linear infinite;
+  }
 
-    padding: 1rem 5rem;
+  button {
+    --_shine-percent: 50%;
+    --animation: rotate-gradient linear infinite;
+    --animation-duration: 3s;
+
+    position: relative;
+    overflow: hidden;
+    font-family: inherit;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    padding: 1.5rem 3rem;
+    border-radius: 3rem;
+    border: 0.0625rem solid transparent;
     cursor: pointer;
+
+    transition: 800ms cubic-bezier(0.25, 1, 0.5, 1);
+    transition-property: --gradient-percent;
     background:
       linear-gradient(var(--color-background), var(--color-background)) padding-box,
       conic-gradient(
           from var(--gradient-angle),
-          transparent calc(var(--shine-gradient-percent) - var(--gradient-percent) * 2),
-          var(--color-highlight) calc(var(--shine-gradient-percent) - var(--gradient-percent)),
-          var(--color-shine) var(--shine-gradient-percent),
-          var(--color-highlight) calc(var(--shine-gradient-percent) + var(--gradient-percent)),
-          transparent calc(var(--shine-gradient-percent) + var(--gradient-percent) * 2)
+          transparent calc(var(--_shine-percent) - var(--gradient-percent) * 2),
+          var(--color-highlight) calc(var(--_shine-percent) - var(--gradient-percent)),
+          var(--color-shine) var(--_shine-percent),
+          var(--color-highlight) calc(var(--_shine-percent) + var(--gradient-percent)),
+          transparent calc(var(--_shine-percent) + var(--gradient-percent) * 2)
         )
         border-box;
-    border-radius: 3rem;
-    border: 1px solid transparent;
-    animation:
-      var(--rotate-animation) var(--rotate-duration),
-      var(--rotate-animation) calc(var(--rotate-duration) / 0.5) reverse paused;
-    animation-composition: add;
-    transition: 200ms cubic-bezier(0.25, 1, 0.5, 1);
-    transition-property: --gradient-percent;
+
+    &::after {
+      --animation: shimmer linear infinite;
+      --animation-duration: 3s;
+
+      content: "";
+      position: absolute;
+      inset: 50%;
+      width: 100%;
+      aspect-ratio: 1;
+      translate: -50% -50%;
+      pointer-events: none;
+
+      background: linear-gradient(-50deg, transparent, var(--color-highlight), transparent);
+      mask-image: radial-gradient(circle at top, transparent 46%, black);
+      opacity: 0.6;
+    }
 
     &:is(:hover, :focus-visible) {
       --gradient-percent: 20%;
-      animation-play-state: running;
+
+      &,
+      &::after,
+      &::before {
+        animation-play-state: running;
+      }
+    }
+
+    &,
+    &::after,
+    &::before {
+      animation:
+        var(--animation) var(--animation-duration),
+        var(--animation) calc(var(--animation-duration) * 2.5) reverse paused;
+      animation-composition: add;
+    }
+  }
+
+  /* Animations */
+  @keyframes shimmer {
+    from {
+      rotate: -26deg;
+    }
+    to {
+      rotate: 334deg;
     }
   }
 
@@ -74,6 +122,7 @@ const title = parseFilename(import.meta.url);
 
     width: min(var(--max-width), 100% - var(--padding));
     margin-inline: auto;
+    font-family: Inter, sans-serif;
   }
 
   main {
@@ -85,7 +134,7 @@ const title = parseFilename(import.meta.url);
     font-size: clamp(2rem, 4vw, 3rem);
     line-height: 1.1;
     text-wrap: pretty;
-    margin-bottom: 1em;
+    margin-bottom: 2em;
 
     & > span {
       text-decoration: underline 0.08em wavy var(--color-primary);
