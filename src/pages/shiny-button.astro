@@ -8,7 +8,9 @@ const title = parseFilename(import.meta.url);
 <MainLayout title={title}>
   <main>
     <h1>Shiny call-to-action button created using <span>@property</span></h1>
-    <button>Get unlimited access</button>
+    <button>
+      <span>Get unlimited access</span>
+    </button>
   </main>
 </MainLayout>
 
@@ -27,16 +29,25 @@ const title = parseFilename(import.meta.url);
     inherits: false;
   }
 
+  @property --gradient-shine {
+    syntax: "<color>";
+    initial-value: hsl(0, 0%, 100%);
+    inherits: false;
+  }
+
   :root {
-    --color-shine: hsl(0, 0%, 100%);
     --color-highlight: hsl(229, 95%, 49%);
+    --color-highlight-subtle: hsl(240, 100%, 76%);
+
     --color-background: hsl(0, 0%, 0%);
+    --color-background-subtle: hsl(0, 4%, 10%);
   }
 
   button {
     --_shine-percent: 50%;
     --animation: rotate-gradient linear infinite;
     --animation-duration: 3s;
+    --transition: 800ms cubic-bezier(0.25, 1, 0.5, 1);
 
     position: relative;
     overflow: hidden;
@@ -47,40 +58,62 @@ const title = parseFilename(import.meta.url);
     border-radius: 3rem;
     border: 0.0625rem solid transparent;
     cursor: pointer;
-
-    transition: 800ms cubic-bezier(0.25, 1, 0.5, 1);
-    transition-property: --gradient-percent;
+    box-shadow: inset 0 0 0 0.0625rem var(--color-background-subtle);
+    transition: var(--transition);
+    transition-property: --gradient-percent, --gradient-shine;
     background:
       linear-gradient(var(--color-background), var(--color-background)) padding-box,
       conic-gradient(
           from var(--gradient-angle),
           transparent calc(var(--_shine-percent) - var(--gradient-percent) * 2),
           var(--color-highlight) calc(var(--_shine-percent) - var(--gradient-percent)),
-          var(--color-shine) var(--_shine-percent),
+          var(--gradient-shine) var(--_shine-percent),
           var(--color-highlight) calc(var(--_shine-percent) + var(--gradient-percent)),
           transparent calc(var(--_shine-percent) + var(--gradient-percent) * 2)
         )
         border-box;
 
+    &::after,
+    &::before,
+    span::before {
+      content: "";
+      position: absolute;
+      inset: 50%;
+      translate: -50% -50%;
+      pointer-events: none;
+    }
+
     &::after {
       --animation: shimmer linear infinite;
       --animation-duration: 3s;
 
-      content: "";
-      position: absolute;
-      inset: 50%;
       width: 100%;
       aspect-ratio: 1;
-      translate: -50% -50%;
-      pointer-events: none;
-
+      opacity: 0.6;
       background: linear-gradient(-50deg, transparent, var(--color-highlight), transparent);
       mask-image: radial-gradient(circle at top, transparent 46%, black);
-      opacity: 0.6;
+    }
+
+    span {
+      z-index: 1;
+    }
+
+    span::before {
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      box-shadow: inset 0 -1rem 2rem 0.2rem var(--color-highlight);
+      transition: opacity var(--transition);
+      animation: breathe linear infinite calc(var(--animation-duration) * 1.5);
     }
 
     &:is(:hover, :focus-visible) {
       --gradient-percent: 20%;
+      --gradient-shine: var(--color-highlight-subtle);
+
+      span::before {
+        opacity: 1;
+      }
 
       &,
       &::after,
@@ -100,6 +133,12 @@ const title = parseFilename(import.meta.url);
   }
 
   /* Animations */
+  @keyframes rotate-gradient {
+    to {
+      --gradient-angle: 360deg;
+    }
+  }
+
   @keyframes shimmer {
     from {
       rotate: -26deg;
@@ -109,9 +148,14 @@ const title = parseFilename(import.meta.url);
     }
   }
 
-  @keyframes rotate-gradient {
+  @keyframes breathe {
+    from,
     to {
-      --gradient-angle: 360deg;
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(1.2);
     }
   }
 
@@ -123,6 +167,10 @@ const title = parseFilename(import.meta.url);
     width: min(var(--max-width), 100% - var(--padding));
     margin-inline: auto;
     font-family: Inter, sans-serif;
+    background-color: hsl(228, 71%, 3%);
+    color: hsl(0, 0%, 100%);
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
   }
 
   main {
@@ -137,9 +185,9 @@ const title = parseFilename(import.meta.url);
     margin-bottom: 2em;
 
     & > span {
-      text-decoration: underline 0.08em wavy var(--color-primary);
+      text-decoration: underline 0.08em wavy var(--color-highlight);
       text-underline-offset: clamp(0.5rem, 0.2rem + 1vw, 0.8rem);
-      color: var(--color-primary);
+      color: var(--color-highlight);
     }
   }
 </style>
