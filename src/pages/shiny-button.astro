@@ -75,16 +75,6 @@ const title = parseFilename(import.meta.url);
         )
         border-box;
 
-    &::after,
-    &::before,
-    span::before {
-      content: "";
-      position: absolute;
-      inset: 50%;
-      translate: -50% -50%;
-      pointer-events: none;
-    }
-
     &::after {
       --animation: shimmer linear infinite;
       --animation-duration: 3s;
@@ -93,15 +83,29 @@ const title = parseFilename(import.meta.url);
       aspect-ratio: 1;
       opacity: 0.6;
       background: linear-gradient(-50deg, transparent, var(--color-highlight), transparent);
-      mask-image: radial-gradient(circle at top, transparent 46%, black);
+      mask-image: radial-gradient(circle at top, transparent 46%, var(--color-background));
     }
 
-    &:active {
-      translate: 0 0.125rem;
+    &::before {
+      --position: 0.125rem;
+      --gap: calc(var(--position) * 2.5);
 
-      span::before {
-        box-shadow: inset 0 -1.5rem 2.5rem 0.5rem var(--color-highlight);
-      }
+      width: 100%;
+      height: 100%;
+      opacity: 0.4;
+      background-image: radial-gradient(
+        circle at var(--position) var(--position),
+        hsl(0, 0%, 100%) calc(var(--position) / 4),
+        transparent 0
+      );
+      background-size: var(--gap) var(--gap);
+      background-repeat: space;
+      mask-image: conic-gradient(
+        from calc(var(--gradient-angle) + 180deg),
+        var(--color-background),
+        transparent 10% 90%,
+        var(--color-background)
+      );
     }
 
     span::before {
@@ -134,6 +138,18 @@ const title = parseFilename(import.meta.url);
       outline-color: hsl(0, 0%, 100%);
     }
 
+    &:active {
+      translate: 0 0.125rem;
+
+      span::before {
+        box-shadow: inset 0 -1rem 2.4rem 0.3rem var(--color-highlight);
+      }
+
+      &:after {
+        opacity: 1;
+      }
+    }
+
     &,
     &::after,
     &::before {
@@ -141,6 +157,16 @@ const title = parseFilename(import.meta.url);
         var(--animation) var(--animation-duration),
         var(--animation) calc(var(--animation-duration) * 2.5) reverse paused;
       animation-composition: add;
+    }
+
+    &::after,
+    &::before,
+    span::before {
+      content: "";
+      position: absolute;
+      inset: 50%;
+      translate: -50% -50%;
+      pointer-events: none;
     }
   }
 
