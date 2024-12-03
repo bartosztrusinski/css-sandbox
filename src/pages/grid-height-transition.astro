@@ -44,10 +44,7 @@ const title = parseFilename(import.meta.url);
       {
         panels.map((panel) => (
           <article>
-            <button
-              aria-expanded={panel.isExpanded}
-              aria-controls={`panel${panel.id}-content`}
-            >
+            <button aria-expanded={panel.isExpanded} aria-controls={`panel${panel.id}-content`}>
               <header id={`panel${panel.id}-heading`}>
                 <h3>{panel.title}</h3>
                 <ArrowIcon isOpen={panel.isExpanded} />
@@ -61,9 +58,7 @@ const title = parseFilename(import.meta.url);
                 <p>
                   {panel.content
                     .split("`")
-                    .map((text, index) =>
-                      index % 2 === 0 ? text : <code>{text}</code>,
-                    )}
+                    .map((text, index) => (index % 2 === 0 ? text : <code>{text}</code>))}
                 </p>
               </section>
             </button>
@@ -74,8 +69,7 @@ const title = parseFilename(import.meta.url);
     <section>
       <h2>Other content here</h2>
       <p>
-        This page contains a sprinkle of JavaScript. When a panel is clicked,
-        the following happens:
+        This page contains a sprinkle of JavaScript. When a panel is clicked, the following happens:
       </p>
       <ul>
         <li>
@@ -119,12 +113,7 @@ const title = parseFilename(import.meta.url);
   }
 
   body {
-    background-image: linear-gradient(
-      120deg,
-      hsl(258, 69%, 28%),
-      hsl(337, 76%, 33%)
-    );
-    /* backdrop-filter: saturate(1.2) contrast(1.2); */
+    background-image: linear-gradient(120deg, hsl(258, 69%, 28%), hsl(337, 76%, 33%));
     display: flex;
     place-content: start;
     place-items: center;
