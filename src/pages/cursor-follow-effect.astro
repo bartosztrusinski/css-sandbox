@@ -1,0 +1,107 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import parseFilename from "../utils/parseFilename";
+
+const title = parseFilename(import.meta.url);
+---
+
+<MainLayout title={title}>
+  <nav>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="/">Back</a></li>
+    </ul>
+  </nav>
+</MainLayout>
+<style>
+  ul {
+    anchor-name: --anchor;
+    width: max-content;
+    margin: 1rem;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    isolation: isolate;
+    text-align: center;
+    padding: 0.5rem;
+    font-family: sans-serif;
+    background-color: hsl(0, 0%, 4%);
+    color: hsl(0, 0%, 53%);
+    border-radius: 0.5rem;
+    min-width: 9rem;
+    font-size: 1.2rem;
+
+    @media (width >= 560px) {
+      flex-direction: row;
+      align-items: stretch;
+      justify-items: stretch;
+      margin-inline: auto;
+    }
+
+    @supports (corner-shape: squircle) {
+      border-radius: 1rem;
+      corner-shape: squircle;
+    }
+
+    &::after {
+      content: "";
+      position-anchor: --anchor;
+      z-index: -1;
+      position: absolute;
+      scale: 0;
+      pointer-events: none;
+      transition: 600ms
+        linear(
+          0,
+          0.029 1.6%,
+          0.123 3.5%,
+          0.651 10.6%,
+          0.862 14.1%,
+          1.002 17.7%,
+          1.046 19.6%,
+          1.074 21.6%,
+          1.087 23.9%,
+          1.086 26.6%,
+          1.014 38.5%,
+          0.994 46.3%,
+          1
+        );
+      background-color: hsl(0, 0%, 12%);
+      border-radius: 0.4rem;
+
+      @supports (corner-shape: squircle) {
+        border-radius: 0.8rem;
+        corner-shape: squircle;
+      }
+    }
+
+    &:has(a:hover)::after {
+      scale: 1;
+      top: anchor(top);
+      left: anchor(left);
+      right: anchor(right);
+      bottom: anchor(bottom);
+    }
+
+    & > li {
+      width: 100%;
+    }
+
+    & a {
+      display: block;
+      padding: 0.4rem 0.8rem;
+      text-decoration: none;
+      color: inherit;
+      transition: color 100ms;
+
+      &:hover {
+        anchor-name: --anchor;
+        color: hsl(0, 0%, 96%);
+      }
+    }
+  }
+</style>
